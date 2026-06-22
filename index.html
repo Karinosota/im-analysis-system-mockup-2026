@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>ルミナス IM分析システム（モックアップ）</title>
+<title>ルミナス IM分析システム — 0円モデル & 課金ラダー</title>
 <style>
   :root{
     --bg:#f6f5f1; --surface:#ffffff; --surface2:#f1efe8;
@@ -12,122 +12,148 @@
     --info-bg:#e6f1fb; --info-tx:#0c447c; --info-bd:#378add;
     --ok-bg:#e1f5ee; --ok-tx:#0f6e56;
     --warn-bg:#faeeda; --warn-tx:#854f0b;
+    --pur-bg:#eeedfe; --pur-tx:#3c3489;
     --gray-bg:#f1efe8; --gray-tx:#5f5e5a;
   }
   *{box-sizing:border-box;}
   body{margin:0; background:var(--bg); color:var(--text);
     font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
     line-height:1.7; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
-  .wrap{max-width:880px; margin:0 auto; padding:28px 20px 60px;}
-  .head{display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding-bottom:16px; border-bottom:1px solid var(--border); margin-bottom:22px; flex-wrap:wrap;}
-  .badge-app{width:36px;height:36px;border-radius:8px;background:var(--info-bg);color:var(--info-tx);
-    display:flex;align-items:center;justify-content:center;font-size:20px;}
-  .h-title{font-size:17px;font-weight:600;}
-  .h-sub{font-size:12px;color:var(--muted);}
-  .lock{font-size:12px;color:var(--muted);}
+  .wrap{max-width:900px; margin:0 auto; padding:28px 20px 70px;}
+  h1{font-size:21px;font-weight:600;margin:0 0 4px;}
+  .sub{font-size:13px;color:var(--muted);margin-bottom:26px;}
+  h2{font-size:17px;font-weight:600;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+  .tagline{background:var(--ok-bg);color:var(--ok-tx);border-radius:10px;padding:13px 16px;font-size:14px;font-weight:600;margin-bottom:8px;}
+  /* layer diagram */
+  .layers{display:flex;flex-direction:column;gap:8px;}
+  .layer{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 15px;}
+  .layer .n{width:26px;height:26px;border-radius:50%;background:var(--pur-bg);color:var(--pur-tx);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;}
+  .layer .body{flex:1;}
+  .layer .t{font-size:14px;font-weight:600;}
+  .layer .d{font-size:12px;color:var(--muted);}
+  .layer .cost{font-size:12px;color:var(--ok-tx);background:var(--ok-bg);padding:3px 9px;border-radius:7px;white-space:nowrap;}
+  .arrow{text-align:center;color:var(--hint);font-size:13px;line-height:1;margin:1px 0;}
+  /* two col */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  .col{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .col h3{font-size:14px;font-weight:600;margin:0 0 9px;display:flex;align-items:center;gap:6px;}
+  .col.ok h3{color:var(--ok-tx);}
+  .col.warn h3{color:var(--warn-tx);}
+  ul{margin:0;padding-left:18px;}
+  li{font-size:13px;margin-bottom:5px;}
+  /* ladder */
+  .tier{border:1px solid var(--border);border-radius:11px;padding:15px 17px;margin-bottom:12px;background:var(--surface);}
+  .tier.free{border:2px solid var(--info-bd);}
+  .tier-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+  .tier-price{font-size:19px;font-weight:600;}
+  .tier-price small{font-size:12px;color:var(--muted);font-weight:400;}
+  .tier-for{font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 10px;border-radius:7px;}
+  .tier-unlock{font-size:13px;color:var(--text);}
+  .tier-unlock b{font-weight:600;}
+  .badge-now{font-size:11px;background:var(--info-bg);color:var(--info-tx);padding:2px 9px;border-radius:7px;margin-left:6px;}
   .note{font-size:12px;color:var(--hint);}
-  .card{background:var(--surface2);border-radius:12px;padding:16px 18px;margin-bottom:20px;}
-  .row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;}
-  .field{flex:1;min-width:220px;}
-  .lab{font-size:13px;color:var(--muted);margin-bottom:6px;}
-  .inp{display:flex;align-items:center;gap:8px;background:var(--surface);
-    border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;color:var(--info-tx);}
-  .btn{background:var(--info-bg);color:var(--info-tx);border:1px solid var(--info-bd);
-    border-radius:8px;font-weight:600;padding:10px 20px;font-size:14px;cursor:pointer;}
-  .sec-title{font-size:14px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:7px;}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:22px;}
-  th{text-align:left;color:var(--muted);font-size:12px;font-weight:400;padding:9px 7px;}
-  td{padding:11px 7px;border-top:1px solid var(--border);vertical-align:middle;}
-  .pill{font-size:11px;padding:3px 10px;border-radius:8px;white-space:nowrap;}
-  .p-ok{background:var(--ok-bg);color:var(--ok-tx);}
-  .p-run{background:var(--info-bg);color:var(--info-tx);}
-  .p-warn{background:var(--warn-bg);color:var(--warn-tx);}
-  .p-none{background:var(--gray-bg);color:var(--gray-tx);}
-  .lnk{color:var(--info-tx);}
-  .panel{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
-  .tabs{display:flex;gap:3px;flex-wrap:wrap;background:var(--surface2);padding:7px 9px;font-size:12px;}
-  .tab{padding:4px 11px;border-radius:8px;color:var(--muted);}
-  .tab.on{background:var(--info-bg);color:var(--info-tx);}
-  .panel-body{padding:16px 18px;background:var(--surface);}
-  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:14px;}
-  .metric{background:var(--surface2);border-radius:8px;padding:10px 13px;}
-  .m-lab{font-size:12px;color:var(--muted);}
-  .m-val{font-size:22px;font-weight:600;}
-  .verdict{display:flex;align-items:center;gap:8px;background:var(--ok-bg);border-radius:8px;padding:11px 15px;}
-  .verdict span{font-size:13px;color:var(--ok-tx);font-weight:600;}
-  .perm{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:var(--muted);}
-  .flow{font-size:11px;color:var(--hint);margin-top:10px;}
-  @media(max-width:640px){.row{flex-direction:column;align-items:stretch;}.btn{width:100%;}}
+  .keybox{background:var(--pur-bg);border-radius:10px;padding:13px 16px;margin:6px 0 2px;font-size:13px;color:var(--pur-tx);}
+  table.cmp{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px;}
+  table.cmp th{background:var(--surface2);text-align:left;padding:8px 10px;font-weight:600;font-size:12px;color:var(--muted);}
+  table.cmp td{padding:9px 10px;border-top:1px solid var(--border);vertical-align:top;}
+  @media(max-width:640px){.cols{grid-template-columns:1fr;}.layer .cost{display:none;}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="head">
-    <div style="display:flex;align-items:center;gap:11px;">
-      <div class="badge-app">▶</div>
-      <div>
-        <div class="h-title">ルミナス IM分析システム</div>
-        <div class="h-sub">案B 常時サーバー / 指定メンバー個別共有 — 画面イメージ（モックアップ）</div>
-      </div>
+  <h1>ルミナス IM分析システム</h1>
+  <div class="sub">完全0円モデル ＋ 課金ラダー設計 / 2026-06-22</div>
+
+  <div class="tagline">結論: ¥0でも本体機能（IM格納→分析→6タブシート→進捗管理→共有）は全部動く。課金は「機能追加」ではなく「制約を外す」投資。</div>
+
+  <h2>① 完全0円モデル「セルフホスト型」</h2>
+  <div class="layers">
+    <div class="layer"><div class="n">1</div><div class="body"><div class="t">トリガー層 — Googleスプシ</div><div class="d">ヨミ表に「分析」チェック＋ステータス列。社内はチェックを入れるだけ</div></div><div class="cost">¥0</div></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><div class="n">2</div><div class="body"><div class="t">橋渡し層 — Mac launchd</div><div class="d">5分毎にスプシをポーリング（既存gspreadトークン）。新規チェックを検知して起動</div></div><div class="cost">¥0</div></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><div class="n">3</div><div class="body"><div class="t">分析層 — Claude MAX ＋ ChatGPTサブスク</div><div class="d">Claude（Claude Code経由）＋ CodeX（codex-plugin-cc経由）の並走ファクトチェック。既存サブスク枠内＝API課金なし</div></div><div class="cost">¥0</div></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><div class="n">4</div><div class="body"><div class="t">出力層 — Google Drive</div><div class="d">6タブ分析シートを自動生成。スプシのステータスを「完了」に更新＋シートURL書き戻し</div></div><div class="cost">¥0</div></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><div class="n">5</div><div class="body"><div class="t">閲覧層 — Sheets個別共有 ＋ GitHub Pages</div><div class="d">指定メンバーに個別共有。進捗ダッシュボードはGitHub Pagesで無料配信</div></div><div class="cost">¥0</div></div>
+  </div>
+  <div class="keybox">ランニングコスト ¥0/月（電気代のみ）。既存のClaude MAX・ChatGPTサブスク・Googleアカウント・Macを総動員して、追加の月額課金ゼロで回す構成。</div>
+
+  <h2>② 0円でできること / 0円の代償</h2>
+  <div class="cols">
+    <div class="col ok">
+      <h3>✓ できること（フル機能）</h3>
+      <ul>
+        <li>IM格納→チェック→数分後に6タブ分析シート自動生成</li>
+        <li>Claude＋CodeX並走ファクトチェック（品質はフル）</li>
+        <li>進捗管理（未分析／分析中／要確認／完了）</li>
+        <li>引用ページ列・業界ベンチマーク自動付与</li>
+        <li>指定メンバー個別共有・閲覧</li>
+        <li>月数十件までは無理なく処理</li>
+      </ul>
     </div>
-    <div class="lock">🔒 閲覧: 指定4名</div>
+    <div class="col warn">
+      <h3>△ 0円の代償（制約）</h3>
+      <ul>
+        <li>Mac起動が前提（寝てる間に回すなら起動したまま）</li>
+        <li>即時ではない（最大5分のポーリング遅延）</li>
+        <li>サブスクのレート上限内（数百件を一気には不可）</li>
+        <li>同時処理は1〜2件</li>
+        <li>自動IM取り込み・通知は無し（手動チェック起点）</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="row">
-      <div class="field">
-        <div class="lab">① IM格納（Drive案件フォルダURL）</div>
-        <div class="inp">📁 drive.google.com/…/サンプル案件A_IM.pdf</div>
-      </div>
-      <div style="text-align:center;">
-        <div class="lab">② 実行</div>
-        <button class="btn">▶ 分析実行</button>
-      </div>
+  <h2>③ 課金ラダー — お金で「制約」を外す</h2>
+  <p class="note" style="margin-top:-2px;">各段は独立。必要な制約だけ選んで外せる。本体機能は¥0のまま据え置き。</p>
+
+  <div class="tier free">
+    <div class="tier-head">
+      <div class="tier-price">¥0/月 <span class="badge-now">いま作れる</span></div>
+      <div class="tier-for">今すぐ・月数十件まで</div>
     </div>
-    <div class="flow">ボタン押下 → Webhook → Claude+CodeX並走分析 → ③シート自動生成・進捗書き戻し</div>
+    <div class="tier-unlock"><b>セルフホスト型フル機能。</b>Mac起動中・半自動（チェック→ポーリング）・品質フル。上記①②の通り。</div>
   </div>
 
-  <div class="sec-title">📋 進捗管理（案件一覧）</div>
-  <table>
-    <thead>
-      <tr><th style="width:32%;">案件</th><th style="width:22%;">ステータス</th><th style="width:22%;">分析シート</th><th style="width:24%;">更新</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>サンプル案件A（飲食9店）</td><td><span class="pill p-ok">完了</span></td><td><span class="lnk">↗ 開く</span></td><td style="color:var(--muted);">06/19 14:02</td></tr>
-      <tr><td>サンプル案件B（直営6店）</td><td><span class="pill p-run">分析中</span></td><td style="color:var(--hint);">—</td><td style="color:var(--muted);">06/19 14:05</td></tr>
-      <tr><td>サンプル案件C（焼肉4店）</td><td><span class="pill p-warn">要確認</span></td><td><span class="lnk">↗ 開く</span></td><td style="color:var(--muted);">06/18 21:30</td></tr>
-      <tr><td>サンプル案件D（直営3店）</td><td><span class="pill p-none">未分析</span></td><td style="color:var(--hint);">—</td><td style="color:var(--hint);">—</td></tr>
-    </tbody>
+  <div class="tier">
+    <div class="tier-head">
+      <div class="tier-price">＋¥1,000〜1,500/月 <small>($7〜10 クラウドサーバー)</small></div>
+      <div class="tier-for">Macを消したい・夜間外出が多い</div>
+    </div>
+    <div class="tier-unlock"><b>「Mac起動の縛り」を外す。</b>Render/Fly.io等に常駐。24/7稼働・即時実行。※分析を完全無人化するには下段のAPI従量と併用が前提（サブスクはMac/対話前提のため）。</div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-head">
+      <div class="tier-price">＋従量 ¥150〜300/件 <small>(Claude API化)</small></div>
+      <div class="tier-for">月50件超・一気に並列で回したい</div>
+    </div>
+    <div class="tier-unlock"><b>「即時性・並列・無人化」を買う。</b>チェック即実行・複数同時処理・完全無人。目安: 月10件で約¥2,000／50件で約¥1万。CodeX並走もAPI化で安定化。</div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-head">
+      <div class="tier-price">＋¥3,000〜5,000/月相当 <small>(機能拡張・主に開発工数)</small></div>
+      <div class="tier-for">案件量が増えフロー化したい</div>
+    </div>
+    <div class="tier-unlock"><b>利便機能を足す。</b>届いたIMメール添付の自動検知→自動分析／LINE・Slack通知／横断比較ダッシュボード／類似案件レコメンド／過去案件DB検索。作り切れば運用は概ね¥0（API使用部分のみ従量）。</div>
+  </div>
+
+  <h2>④ 一目で比較</h2>
+  <table class="cmp">
+    <tr><th>項目</th><th>¥0 セルフホスト</th><th>＋¥1,000 サーバー</th><th>＋従量 API化</th></tr>
+    <tr><td>Mac起動</td><td>必要</td><td>不要(24/7)</td><td>不要(24/7)</td></tr>
+    <tr><td>実行タイミング</td><td>最大5分遅延</td><td>即時</td><td>即時</td></tr>
+    <tr><td>同時処理</td><td>1〜2件</td><td>2〜3件</td><td>並列多数</td></tr>
+    <tr><td>月間件数の上限</td><td>数十件</td><td>数十件</td><td>事実上無制限</td></tr>
+    <tr><td>分析品質</td><td>フル(Claude+CodeX)</td><td>フル</td><td>フル(API化で安定)</td></tr>
+    <tr><td>追加月額</td><td>¥0</td><td>¥1,000〜1,500</td><td>¥150〜300/件</td></tr>
   </table>
 
-  <div class="sec-title">📊 ③ 生成される統合分析シート（サンプル案件A）</div>
-  <div class="panel">
-    <div class="tabs">
-      <span class="tab on">① サマリー</span>
-      <span class="tab">② 財務分析</span>
-      <span class="tab">③ メリデメ</span>
-      <span class="tab">④ 質問リスト</span>
-      <span class="tab">⑤ バリュエーション</span>
-      <span class="tab">⑥ 検証レポート</span>
-    </div>
-    <div class="panel-body">
-      <div class="metrics">
-        <div class="metric"><div class="m-lab">店舗数</div><div class="m-val">9店</div></div>
-        <div class="metric"><div class="m-lab">年商</div><div class="m-val">¥X.X億</div></div>
-        <div class="metric"><div class="m-lab">営業利益率</div><div class="m-val">X.X%</div></div>
-        <div class="metric"><div class="m-lab">想定倍率</div><div class="m-val">X.Xx</div></div>
-      </div>
-      <div class="verdict"><span>✓ AI仮判定: GO（要TOP面談で論点確認）</span></div>
-      <div class="flow">※ Claude+CodeX並走でファクトチェック済 / 引用ページ列・業界ベンチマーク自動付与 / GO・NO-GOは確認後に確定</div>
-    </div>
-  </div>
-
-  <div class="perm">👥 閲覧権限: 指定メンバーに個別共有（Googleログイン認証）。「リンクを知っている全員」は使用しません。</div>
-
-  <p class="note" style="margin-top:28px;border-top:1px solid var(--border);padding-top:14px;">
-    これは提案中システムの画面イメージ（モックアップ）です。表示データはすべて架空のサンプルで、実在の案件・財務数値は含みません。
+  <p class="note" style="margin-top:24px;border-top:1px solid var(--border);padding-top:14px;">
+    本ページは提案資料です。表示データ・金額は概算/サンプルで、実在の案件・確定見積りではありません。API単価はIMのページ数・モデルにより変動します。
   </p>
 
 </div>
